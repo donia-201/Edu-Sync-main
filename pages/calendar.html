@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSync - Calendar</title>
+  <link rel="stylesheet" href="../assets/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/calendar.css">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="shortcut icon" href="../imgs/education.png" type="image/x-icon">
+</head>
+<body>
+
+  <nav class="navbar py-3">
+    <div class="container py-3">
+      <span class="navbar-brand title2 mb-0">EduSync</span>
+      <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
+        <a class="nav-link px-2" href="../pages/dashboard.html"><i class="fa-solid fa-chart-line"></i></a>
+        <a class="nav-link px-2" href="../pages/events.html"><i class="fa-regular fa-calendar"></i></a>
+        <a class="nav-link px-2" href="../pages/pomotimer.html"><i class="fa-solid fa-stopwatch-20"></i></a>
+        <a class="nav-link px-2" href="../pages/home.html"><i class="fa-solid fa-house"></i></a>
+        <button class="theme-toggle-btn ms-3">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button id="prevMonth"><i class="fas fa-chevron-right"></i></button>
+        <div>
+          <h2 id="currentMonthYear" onclick="toggleMonthYearSelector()">
+            <i class="fas fa-calendar-alt"></i>
+            <span id="monthYearText"></span>
+          </h2>
+          <div class="month-year-selector" id="monthYearSelector">
+            <select id="monthSelect"></select>
+            <select id="yearSelect"></select>
+            <!-- FIX: Arabic text in English page causes layout issue.
+                 Replaced with English label and added dir="ltr" to prevent RTL bleed -->
+            <button dir="ltr" onclick="applyMonthYear()">Apply</button>
+          </div>
+        </div>
+        <button id="nextMonth"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+      <div class="calendar-weekdays" id="weekdays"></div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="eventModal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h3>📅 Add New Event</h3>
+        <div class="selected-date-display" id="selectedDateDisplay"></div>
+        <div class="form-group">
+          <label for="eventTitle">📝 Event title *</label>
+          <input type="text" id="eventTitle" class="form-control" placeholder="Enter Event title..." required>
+        </div>
+        <div class="form-group">
+          <label for="eventStart">⏰ Start Time *</label>
+          <input type="datetime-local" id="eventStart" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="eventEnd">⏰ End Time *</label>
+          <input type="datetime-local" id="eventEnd" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="eventDesc">📄 Description</label>
+          <textarea id="eventDesc" class="form-control" placeholder="Enter Description... (optional)" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="eventReminder">🔔 Reminder (minutes before)</label>
+          <select id="eventReminder" class="form-control">
+            <option value="">No Reminder</option>
+            <option value="5">5 minutes before</option>
+            <option value="10">10 minutes before</option>
+            <option value="15">15 minutes before</option>
+            <option value="30">30 minutes before</option>
+            <option value="60">1 hour before</option>
+            <option value="120">2 hours before</option>
+            <option value="1440">1 day before</option>
+          </select>
+          <small class="form-text text-muted">When should we remind you about this event?</small>
+        </div>
+        <button id="saveEventBtn" class="btn btn-primary w-100">
+          <i class="fas fa-save"></i> Save Event
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/shared.js"></script>
+  <script src="../js/calendar.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

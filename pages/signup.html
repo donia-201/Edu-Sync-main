@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSync - Sign Up</title>
+  <link rel="stylesheet" href="../assets/bootstrap.min.css">
+  <!-- FIX: removed duplicate local all.min.css — Font Awesome loaded once via CDN below -->
+  <link rel="stylesheet" href="../assets/signup.css">
+  <link rel="stylesheet" href="../assets/theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="shortcut icon" href="../imgs/education.png" type="image/x-icon">
+</head>
+<body>
+
+  <section class="header">
+    <div>
+      <img src="../imgs/education.png" alt="" width="60" class="img-fluid d-flex justify-content-center">
+    </div>
+    <h1 class="heading">EduSync</h1>
+    <h3>You don't Have Account?</h3>
+  </section>
+
+  <div class="d-flex justify-content-center">
+    <section class="container bg-fo">
+      <form class="row g-3" id="signup-form">
+        <div class="col-12">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Your Name Is..." required>
+        </div>
+        <div class="col-12">
+          <label for="email" class="form-label">Your Email</label>
+          <input type="email" class="form-control" id="email" placeholder="example abc@gmail.com..." required>
+          <span class="error" id="email-error"></span>
+        </div>
+        <div class="col-12">
+          <label for="uName" class="form-label">Username</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="uName" placeholder="Your User-Name Is..." required>
+          </div>
+          <span class="error" id="uName-error"></span>
+        </div>
+        <div class="col-12">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input type="password" class="form-control pass" id="password" placeholder="Write strong valid password" required>
+            <span id="togglePassword" class="toggle-icon">
+              <i class="fa-solid fa-eye"></i>
+            </span>
+          </div>
+          <span class="error" id="password-error"></span>
+        </div>
+        <div class="col-12">
+          <label for="pass2" class="form-label">Confirm Password</label>
+          <div class="input-group">
+            <input type="password" class="form-control pass" id="pass2" placeholder="Re-write password" required>
+            <span id="togglePassword2" class="toggle-icon">
+              <i class="fa-solid fa-eye icon"></i>
+            </span>
+          </div>
+          <span class="error" id="confirm-password-error"></span>
+        </div>
+        <div class="col-12">
+          <label for="sfield" class="form-label">Study Field</label>
+          <select class="form-select form-control" id="sfield" onchange="toggleOtherField()" required>
+            <option selected disabled value="">Choose...</option>
+            <option value="Architecture">Architecture</option>
+            <option value="AI">AI</option>
+            <option value="Back-End">Back-End</option>
+            <option value="Biology">Biology</option>
+            <option value="Business Administration">Business Administration</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Computer science">Computer science</option>
+            <option value="Cyber security">Cyber security</option>
+            <option value="Data science">Data science</option>
+            <option value="Education">Education</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Front-End">Front-End</option>
+            <option value="Graphic Design">Graphic Design</option>
+            <option value="Law">Law</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Medicine">Medicine</option>
+            <option value="Pharmacy">Pharmacy</option>
+            <option value="Physics">Physics</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Statistic">Statistic</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="text" name="OtherField" class="form-control mt-4" id="OtherField" placeholder="Enter Your study Field...">
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+            <label class="form-check-label" for="invalidCheck3">
+              Agree to terms and conditions
+            </label>
+            <div id="invalidCheck3Feedback" class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn button-primary" type="submit">Sign up</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <section class="link">
+    <div class="login">
+      <h3>You already have an account?</h3>
+      <a href="../pages/login.html">Log in</a>
+    </div>
+    <div>
+      <!-- FIX: Client ID removed — backend handles OAuth initiation -->
+      <button class="btn button-outline-primary g-id-signin" data-type="standard" onclick="GoogleRedirect()">
+        continue with
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" style="display: inline;">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+          <path fill="none" d="M0 0h48v48H0z"></path>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- FIX: added shared.js so theme/settings apply on signup page too -->
+  <script src="../js/shared.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="../js/signup.js"></script>
+  <script src="../js/theme.js"></script>
+  <script>
+    function GoogleRedirect() {
+      window.location.href = "https://edu-sync-back-end-production.up.railway.app/auth/google";
+    }
+  </script>
+</body>
+</html>

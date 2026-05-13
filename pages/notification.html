@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSync - Notifications</title>
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/notification.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="shortcut icon" href="./imgs/education.png" type="image/x-icon">
+
+</head>
+<body>
+    <nav class="navbar py-3">
+        <div class="container  py-3">
+            <span class="navbar-brand title2 mb-0">EduSync</span>
+            <div class="navbar-nav ms-auto d-flex  flex-row align-items-center">
+                <a class="nav-link px-2" href="../pages/dashboard.html"><i class="fa-solid fa-chart-line"></i></a>                
+                <a class="nav-link px-2" href="../pages/events.html"><i class="fa-regular fa-calendar"></i></a>
+                <a class="nav-link px-2" href="../pages/pomotimer.html"><i class="fa-solid fa-stopwatch-20"></i></a>
+                <a class="nav-link px-2" href="../pages/home.html"><i class="fa-solid fa-house"></i></a>                
+                <button class="theme-toggle-btn ms-3">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="d-flex flex-column">
+        <header class="justify-content-center align-items-center p-4">
+            <h2>All Your Notifications Here...</h2>
+        </header>
+
+        <div class="notifications-container">
+            <!-- Hadith Card -->
+            <div class="hadith-card notification-card">
+                <div class="hadith-text ">
+                    " قال رسول الله صلى الله عليه وسلم: "إذا قامت الساعة وفي يد أحدكم فسيلة فليغرسها
+                </div>
+            </div>
+
+            <!-- Clear All Button -->
+            <div class="text-center">
+                <button class="clear-all-btn" id="clearAllBtn">
+                    <i class="fas fa-trash-alt"></i> Clear All Notifications
+                </button>
+            </div>
+
+            <!-- Notifications List -->
+            <div id="notificationsList"></div>
+
+    </main>
+    <script src="../js/shared.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/theme.js"></script>    
+    <script src="../js/main.js"></script>
+    <script src="../js/notification.js"></script>
+</body>
+</html>

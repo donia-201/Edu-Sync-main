@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSync - setting</title>
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/setting.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="shortcut icon" href="./imgs/education.png" type="image/x-icon">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSync - setting</title>
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/setting.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="shortcut icon" href="./imgs/education.png" type="image/x-icon">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+            <span class="navbar-brand title2 mb-0 logo">EduSync</span>
+        <a href="../pages/home.html" class="back-btn">← Back to Home</a>
+    </nav>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        ✓ Settings saved successfully!
+    </div>
+
+    <div class="container py-4 py-md-5 flex-column ">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Customize your learning experience</p>
+            </div>
+        </div>
+
+        <!-- Account Settings -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="settings-section">
+                    <h2 class="section-title"> Account Settings</h2>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Display Name</h3>
+                                            <p>Change how your name appears</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type="text" class="form-control" id="displayName" placeholder="Enter your name" value="Student">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Email Address</h3>
+                                            <p>Update your email address</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type="email" class="form-control" id="email" placeholder="your@email.com" value="student@edusync.com">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Study Field</h3>
+                                            <p>Your primary area of study</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="studyField">
+                                            <option value="computer-science">Computer Science</option>
+                                            <option value="engineering">Engineering</option>
+                                            <option value="medicine">Medicine</option>
+                                            <option value="business">Business & Economics</option>
+                                            <option value="arts">Arts & Humanities</option>
+                                            <option value="sciences">Natural Sciences</option>
+                                            <option value="mathematics">Mathematics</option>
+                                            <option value="languages">Languages</option>
+                                            <option value="law">Law</option>
+                                            <option value="psychology">Psychology</option>
+                                            <option value="education">Education</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Academic Level</h3>
+                                            <p>Your current education level</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="academicLevel">
+                                            <option value="high-school">High School</option>
+                                            <option value="undergraduate">Undergraduate</option>
+                                            <option value="graduate">Graduate (Master's)</option>
+                                            <option value="phd">PhD / Doctorate</option>
+                                            <option value="professional">Professional Development</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appearance Settings -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="settings-section">
+                    <h2 class="section-title">🎨 Appearance</h2>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Color Theme</h3>
+                                            <p>Choose your preferred color scheme</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="theme">
+                                            <option value="blue">Blue Pastel (Default)</option>
+                                            <option value="purple">Purple Dream</option>
+                                            <option value="green">Fresh Green</option>
+                                            <option value="pink">Soft Pink</option>
+                                            <option value="sunset">Sunset Orange</option>
+                                            <option value="ocean">Deep Ocean</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Language</h3>
+                                            <p>Select your preferred language</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="language">
+                                            <option value="en">English</option>
+                                            <option value="ar">العربية (Arabic)</option>
+                                            <option value="fr">Français</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Font Size</h3>
+                                            <p>Adjust text size for better readability</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="fontSize">
+                                            <option value="small">Small (90%)</option>
+                                            <option value="medium" selected>Medium (100%)</option>
+                                            <option value="large">Large (110%)</option>
+                                            <option value="extra-large">Extra Large (120%)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Animations</h3>
+                                            <p>Enable smooth transitions and effects</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="animations" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Preferences -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="settings-section">
+                    <h2 class="section-title">📚 Study Preferences</h2>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Pomodoro Duration</h3>
+                                            <p>Length of each study session</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="pomodoroDuration">
+                                            <option value="15">15 minutes</option>
+                                            <option value="25" selected>25 minutes</option>
+                                            <option value="30">30 minutes</option>
+                                            <option value="45">45 minutes</option>
+                                            <option value="60">60 minutes</option>
+                                            <option value="90">90 minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Short Break Duration</h3>
+                                            <p>Length of breaks between sessions</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="breakDuration">
+                                            <option value="5" selected>5 minutes</option>
+                                            <option value="10">10 minutes</option>
+                                            <option value="15">15 minutes</option>
+                                            <option value="20">20 minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Long Break Duration</h3>
+                                            <p>Extended break after 4 sessions</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="longBreakDuration">
+                                            <option value="15">15 minutes</option>
+                                            <option value="20">20 minutes</option>
+                                            <option value="30" selected>30 minutes</option>
+                                            <option value="45">45 minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Daily Study Goal</h3>
+                                            <p>Target hours of study per day</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <select class="form-select" id="studyGoal">
+                                            <option value="1">1 hour</option>
+                                            <option value="2">2 hours</option>
+                                            <option value="3">3 hours</option>
+                                            <option value="4" selected>4 hours</option>
+                                            <option value="5">5 hours</option>
+                                            <option value="6">6 hours</option>
+                                            <option value="8">8 hours</option>
+                                            <option value="10">10 hours</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Auto-start Next Session</h3>
+                                            <p>Automatically begin the next study session</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="autoStart">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="settings-section">
+                    <h2 class="section-title">🔔 Notifications</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Study Reminders</h3>
+                                        <p>Remind me to start study sessions</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="studyReminders" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Break Notifications</h3>
+                                        <p>Alert when it's time for a break</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="breakNotifications" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Exam Reminders</h3>
+                                        <p>Get notified before upcoming exams</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="examReminders" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Weekly Progress Report</h3>
+                                        <p>Receive weekly study statistics summary</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="weeklyReport" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Sound Effects</h3>
+                                        <p>Play sounds for timers and notifications</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="soundEffects" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Desktop Notifications</h3>
+                                        <p>Show notifications on your desktop</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="desktopNotifications">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Integration -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="settings-section">
+                    <h2 class="section-title"> Calendar Integration</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Google Calendar Sync</h3>
+                                        <p>Sync study schedule with Google Calendar</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="googleCalendar">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Auto-add Study Sessions</h3>
+                                        <p>Create calendar events for study sessions</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="autoAddSessions">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="setting-item">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="setting-info mb-2 mb-md-0">
+                                        <h3>Sync Exams & Deadlines</h3>
+                                        <p>Add important dates to your calendar</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="syncExams">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy & Data -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="settings-section">
+                    <h2 class="section-title">🔒 Privacy & Data</h2>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Usage Analytics</h3>
+                                            <p>Help improve EduSync with anonymous data</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="analytics" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Export Your Data</h3>
+                                            <p>Download all your study data and notes</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <button class="action-btn w-100"> Export Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Reset All Settings</h3>
+                                            <p>Restore default settings and preferences</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <button class="action-btn w-100" onclick="resetSettings()"> Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="setting-item">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                                        <div class="setting-info">
+                                            <h3>Delete Account</h3>
+                                            <p>Permanently delete your account and data</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <button class="action-btn danger w-100"> Delete Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="row">
+            <div class="col-12">
+                <button class="save-btn w-100" onclick="saveSettings()"> Save All Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/setting.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+:root {
+    --color-bg-light: #ffffff;
+    --color-bg-alt: #e2eafc;
+    --color-accent-light: #d7e3fc;
+    --color-accent: #ccdbfd;
+    --color-accent-dark: #c1d3fe;
+    --color-primary: #b6ccfe;
+    --color-primary-dark: #abc4ff;
+    --color-border: #ccd6f6;
+    --color-shadow: rgba(0,0,0,0.8);
+    /* text */
+    --color-text-main: #1e1e2f;
+    --color-text-light: #4a4a6a;
+    --color-heading: #0a0a23;
+    /* fonts */
+    --font-heading: 'Caveat Brush', cursive !important;
+    --font-body: 'Playfair Display', serif !important;
+}
+body{
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: hidden;
+    padding:12px;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+}
+.navbar{
+    position: sticky;
+    scroll-behavior: smooth;
+}
+
+.button-nav{
+    background-color: transparent;
+    color: var(--color-primary-dark) !important;
+    border: 2px solid var(--color-primary-dark) !important;
+}
+.button-nav:hover ,.button-nav:active{
+    background-color: var(--color-primary-dark) !important;
+    color: var(--color-text-main) !important;
+    border-color: var(--color-primary-dark) !important;
+}
+.offcanvas{
+visibility: visible !important;
+}
+
+.button-close{
+    background-color: transparent;
+    color: var(--color-text-main) !important;
+    border: none;
+}
+.button-close:hover ,.button-close:active{
+    border: 1px solid  var(--color-primary-dark);
+}
+.side-body{
+    background-color: var(--color-bg-light) !important;
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    line-height: 2;
+}
+
+
+.side-body ul li a{
+    padding-left: 20px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.side-body ul li:hover , .side-body ul li:active{
+    background-color: rgba(117, 173, 236, 0.349);
+    border-radius: 10px;
+}
+        .search-container {
+            margin: 2rem auto;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            position: relative;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 25px;
+            font-size: 16px;
+        }
+        #search-btn {
+        position: absolute;
+        right: 26px;
+        top: 26px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--color-primary-dark);
+            transition: all 0.3s;
+}
+
+        .playlist-section {
+            margin: 3rem 0;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .playlist-title {
+            display: flex;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        .video-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .video-card {
+            background: var(--color-accent-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .video-info {
+            padding: 1rem;
+        }
+        .video-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-heading);
+            display: -webkit-box;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .video-channel {
+            font-size: 0.85rem;
+            color: var(--color-text-main);
+            margin-bottom: 0.5rem;
+        }
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .video-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .btn-watch {
+            background: var(--color-primary-dark);
+            color: var(--color-text-main);
+        }
+        .btn-save {
+            background: var(--color-primary-dark);
+            color: var(--color-text-main);
+        }
+        .btn-watch:hover { background: var(--color-accent-dark); }
+        .btn-save:hover { background: var(--color-accent-dark); }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: var(--color-text-light);
+        }
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color:var(--color-text-light);
+        }
+ 

@@ -1,0 +1,111 @@
+:root {
+  --color-bg-light: #ffffff;
+  --color-bg-alt: #e2eafc;
+  --color-accent-light: #d7e3fc;
+  --color-accent: #ccdbfd;
+  --color-accent-dark: #8aadff;
+  --color-primary: #b6ccfe;
+  --color-primary-dark: #abc4ff;
+  --color-border: #ccd6f6;
+  --color-shadow: rgba(0,0,0,0.8);
+  /* text */
+  --color-text-main: #1e1e2f;
+  --color-text-light: #4a4a6a;
+  --color-heading: #0a0a23;
+  /* fonts */
+  --font-heading: 'Caveat Brush', cursive !important;
+  --font-body: 'Playfair Display', serif !important;
+}
+
+body {
+  background-image: linear-gradient( var(--color-primary-dark), var(--color-accent));
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: var(--font-body);
+  color: var(--color-text-main);
+  margin: 26px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.min-vh-96{
+  min-height: 96vh;
+}
+.header{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container{
+  margin: 60px 20px;
+  padding: 20px ;
+  background-color: var(--color-bg-light);
+  border-radius: 20px;
+  border: 2px solid var(--color-border);
+}
+.link{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login{
+  display: flex;
+  row-gap: 10px;
+}
+.login a{
+  padding: 6px;
+  color: var(--color-text-main);
+}
+
+a ,a:hover{
+  color: inherit;
+}
+.btn{
+    font-size: 1.1rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.btn.button-outline-primary,
+.btn.button-primary:hover {
+  color: var(--color-accent-dark) !important;
+  background-color: #fff !important;
+  border-color: var(--color-primary-dark) !important;
+}
+.btn.button-outline-primary:hover,
+.btn.button-primary { 
+  color: #fff !important;
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+  box-shadow: 2px 2px 2px var(--color-primary-dark);
+}
+label , .heading{
+  font-family: var(--font-heading);
+}
+.link a:hover{
+  color: var(--color-accent-dark);
+}
+
+.input-group {
+  position: relative;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--color-primary-dark);
+}
+
+#OtherField{
+  display: none;
+}
+
+.error{
+  color: rgb(240, 82, 82);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}

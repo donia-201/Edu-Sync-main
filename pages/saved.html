@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSync - Saved Videos</title>
+    <link rel="stylesheet" href="../assets/saved.css">
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/all.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="shortcut icon" href="../imgs/education.png" type="image/x-icon">
+    
+</head>
+<body>
+    <nav class="navbar py-3">
+        <div class="container  py-3">
+            <span class="navbar-brand title2 mb-0">EduSync</span>
+            <div class="navbar-nav ms-auto d-flex  flex-row align-items-center">
+                <a class="nav-link px-2" href="../pages/dashboard.html"><i class="fa-solid fa-chart-line"></i></a>                
+                <a class="nav-link px-2" href="../pages/events.html"><i class="fa-regular fa-calendar"></i></a>
+                <a class="nav-link px-2" href="../pages/pomotimer.html"><i class="fa-solid fa-stopwatch-20"></i></a>
+                <a class="nav-link px-2" href="../pages/home.html"><i class="fa-solid fa-house"></i></a>                
+                <button class="theme-toggle-btn ms-3">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="p-2">
+        <div class="page-header">
+            <h1><i class="fas fa-bookmark"></i> Saved Videos</h1>
+            <p>Your collection of educational content</p>
+        </div>
+
+        <div id="saved-count" class="text-center mb-2"></div>
+        
+        <div style="text-align: center;">
+            <button id="clear-all-btn" class="clear-all-btn" style="display: none;">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+
+        <div id="saved-videos-container" class="video-grid"></div>
+    </main>
+
+        <script src="../js/shared.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/saved.js"></script>
+    
+</body>
+</html>

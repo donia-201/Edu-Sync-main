@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSync - Home</title>
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/bootstrap.min.css">
+  <!-- FIX: removed duplicate local all.min.css — Font Awesome loaded once via CDN below -->
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="shortcut icon" href="../imgs/education.png" type="image/x-icon">
+</head>
+<body>
+
+  <nav class="navbar py-3">
+    <div class="container py-3">
+      <span class="navbar-brand title2 mb-0">EduSync</span>
+      <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
+        <a class="nav-link px-2" href="../pages/dashboard.html"><i class="fa-solid fa-chart-line"></i></a>
+        <a class="nav-link px-2" href="../pages/events.html"><i class="fa-regular fa-calendar"></i></a>
+        <a class="nav-link px-2" href="../pages/pomotimer.html"><i class="fa-solid fa-stopwatch-20"></i></a>
+        <a class="nav-link px-2" href="../pages/home.html"><i class="fa-solid fa-house"></i></a>
+        <button class="btn button-nav ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#myside-bar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <button class="theme-toggle-btn ms-3">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="d-flex row">
+    <section class="welcome-section text-center col-10 my-5 m-3">
+      <h1 id="welcome-message">Welcome!</h1>
+      <p id="study-field-message" class="mt-2 fs-5"></p>
+    </section>
+
+    <section class="search-container col-10">
+      <div class="search-box p-3">
+        <input type="text" id="search-input" placeholder="Search for educational videos...">
+        <span><i class="fas fa-search m-3" id="search-btn"></i></span>
+      </div>
+    </section>
+
+    <section id="search-results" class="playlist-section col-12 p-3" style="display: none;">
+      <h2 class="playlist-title text-center align-items-center justify-content-center ps-3">Search Results</h2>
+      <div id="search-videos" class="video-grid justify-content-center"></div>
+    </section>
+
+    <section id="recommended-playlists" class="col-12 p-5">
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading recommended content...
+      </div>
+    </section>
+  </main>
+
+  <div id="video-modal" class="video-modal">
+    <div class="video-modal-content">
+      <button class="video-modal-close" onclick="closeVideoModal()">×</button>
+      <iframe id="video-player" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <aside>
+    <div class="offcanvas offcanvas-start side-body" tabindex="-1" id="myside-bar">
+      <div class="offcanvas-header justify-content-end">
+        <button class="button-close p-3" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body side-body d-flex flex-column ps-5">
+        <ul class="list-unstyled mt-3">
+          <li><i class="fa-solid fa-bookmark"></i> <a href="../pages/saved.html">Saved Videos</a></li>
+          <hr>
+          <li><i class="fa-solid fa-stopwatch-20"></i> <a href="../pages/pomotimer.html">Pomodoro Timer</a></li>
+          <hr>
+          <li><i class="fas fa-comments"></i> <a href="../pages/aichat.html">AI Chat</a></li>
+          <hr>
+          <li><i class="fa-solid fa-chart-line"></i> <a href="../pages/dashboard.html">Dashboard</a></li>
+          <hr>
+          <li><i class="fa-solid fa-bell"></i> <a href="../pages/notification.html">Notification</a></li>
+          <hr>
+          <li><i class="fa-solid fa-note-sticky"></i> <a href="../pages/notes.html">Notes</a></li>
+          <hr>
+          <li><i class="fa-solid fa-calendar-day"></i> <a href="../pages/calendar.html">Calendar</a></li>
+          <hr>
+          <li><i class="fa-regular fa-calendar"></i> <a href="../pages/events.html">Events</a></li>
+          <hr>
+          <li><i class="fa-solid fa-gear"></i> <a href="../pages/setting.html">Settings</a></li>
+          <hr>
+          <li><i class="fa-solid fa-address-book"></i> <a href="../pages/contact.html">Contact Us</a></li>
+          <hr>
+          <li><i class="fa-solid fa-arrow-right-to-bracket"></i> <a href="#" id="logout-btn">Log Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    function closeVideoModal() {
+      const modal = document.getElementById('video-modal');
+      const player = document.getElementById('video-player');
+      player.src = '';
+      modal.classList.remove('active');
+    }
+
+    document.getElementById('video-modal')?.addEventListener('click', function (e) {
+      if (e.target === this) closeVideoModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeVideoModal();
+    });
+  </script>
+
+  <script src="../js/shared.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSync</title>
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link rel="stylesheet" href="../assets/contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="shortcut icon" href="../imgs/education.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+            <span class="navbar-brand title2 mb-0 logo">EduSync</span>
+        <a href="../pages/home.html" class="back-btn">← Back to Home</a>
+    </nav>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        ✓ Message sent successfully! We'll get back to you soon.
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">Get in Touch</h1>
+        <p class="page-subtitle">We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>
+
+        <div class="content-wrapper">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" name="name" class="form-control" id="name" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" name="email"  class="form-control" id="email" required placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="title"  class="form-control" required>
+                            <option value="">Select a topic</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="bug">Bug Report</option>
+                            <option value="account">Account Issue</option>
+                            <option value="feedback">General Feedback</option>
+                            <option value="partnership">Partnership Inquiry</option>
+                            <option value="question">Question</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message"  class="form-control" required placeholder="Tell us what's on your mind..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn"> Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="info-card">
+                    <h3> Email Us</h3>
+                    <p style="margin-top: 15px;"><strong>Support team:</strong></p>
+                    <a href="mailto:doniaafify615@gmail.com">EduSync@gmail.com</a>
+                </div>
+
+                <div class="info-card">
+                    <h3> Follow Us</h3>
+                    <p>Stay connected and get updates</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/donia.afify.1" class="social-btn" title="Facebook">f</a>
+                        <a href="https://www.linkedin.com/in/donia-afify" class="social-btn" title="LinkedIn">in</a>
+                    </div>
+                </div>
+
+
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question ">
+                    How quickly will I receive a response? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    We typically respond to all inquiries within 24-48 hours during business days. For urgent technical issues, we aim to respond within 12 hours. Premium members receive priority support with even faster response times.
+                </div>
+            </div>
+
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Can I schedule a demo or consultation? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! We offer free 30-minute consultation calls for educational institutions, and team plans. Select "Partnership Inquiry" in the contact form above, or email us directly at hello@edusync.com to schedule your demo.
+                </div>
+            </div>
+
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    How do I report a bug or technical issue? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Select "Bug Report" from the subject dropdown in the contact form. Please include as much detail as possible: what you were doing when the issue occurred, what happened, error messages if any, and what browser/device you're using. Screenshots are also very helpful!
+                </div>
+            </div>
+
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Is my data secure and private? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely. We use industry-standard encryption and security practices to protect your data. Your personal information is never shared with third parties for marketing purposes. All data is stored securely, and we comply with international data protection regulations including GDPR. For more details, please review our Privacy Policy.
+                </div>
+            </div>
+
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    What languages does EduSync support? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    EduSync currently supports English, Arabic,and french . We're constantly working to add more languages. If you'd like to see a specific language added, please let us know through the contact form!
+                </div>
+            </div>
+
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Can I request new features? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! We love hearing from our users and many of our best features came from user suggestions. Select "Feature Request" in the contact form and tell us about your idea. We review all suggestions and prioritize them based on user feedback and feasibility.
+                </div>
+            </div>
+
+            <div class="faq-item form-control" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Do you offer phone support? <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Currently, we provide support through email and our help center. 
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+    emailjs.init("LXNvQsboNkivuPYtY");
+</script>
+    <script src="../js/shared.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/contact.js"></script>
+</body>
+</html>

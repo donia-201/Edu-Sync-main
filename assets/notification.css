@@ -1,0 +1,252 @@
+:root {
+  --color-bg-light: #ffffff;
+  --color-bg-alt: #e2eafc;
+  --color-accent-light: #d7e3fc;
+  --color-accent: #ccdbfd;
+  --color-accent-dark: #8aadff;
+  --color-primary: #b6ccfe;
+  --color-primary-dark: #abc4ff;
+  --color-border: #ccd6f6;
+  --color-shadow: rgba(0,0,0,0.8);
+  /* text */
+  --color-text-main: #1e1e2f;
+  --color-text-light: #4a4a6a;
+  --color-heading: #0a0a23;
+  /* fonts */
+  --font-heading: 'Caveat Brush', cursive !important;
+  --font-body: 'Playfair Display', serif !important;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: var(--font-body);
+  color: var(--color-text-main);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+ main{
+  min-height: 100vh;
+  background-color: var(--color-bg-light);
+    border-radius: 8px;
+    padding: 10px;
+ }
+
+
+        .notifications-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .notification-card {
+        border: 2px solid var(--color-border);
+        border-radius: 8px ;
+        background-color: var(--color-bg-light);
+        color: var(--color-text-light);
+        padding: 10px 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notification-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-30%, -30%) scale(1.1); }
+        }
+
+        .notification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .notification-card.focus-type {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-accent) 100%);
+        }
+
+        .notification-card.break-type {
+    background: linear-gradient(135deg, #93fb9c 0%, #63aff7 100%);
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .notification-icon {
+            font-size: 2rem;
+        }
+
+        .notification-time {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .notification-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .notification-message-ar {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        .notification-message-en {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .notification-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .clear-all-btn {
+            background-color:  #f5576c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .clear-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-text-light);
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+
+
+        .hadith-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.8;
+            direction: rtl;
+        }
+
+        @media (max-width: 768px) {
+            .notification-card {
+                padding: 15px;
+            }
+
+            .notification-message-ar {
+                font-size: 1rem;
+            }
+
+            .notification-message-en {
+                font-size: 0.85rem;
+            }
+        }
+
+.notification-card.event-type {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    color: #2d3436;
+}
+
+.notification-card.event-type .notification-type-badge {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.notification-card.read {
+    opacity: 0.7;
+}
+
+.notification-card.unread {
+    border-left: 4px solid #ff6b6b;
+}
+
+.unread-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff6b6b;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    z-index: 2;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.notification-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--color-heading);
+}
+
+.notification-message {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--color-text-main);
+}
+
+.notification-card button {
+    transition: all 0.3s ease;
+}
+
+.notification-card button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}

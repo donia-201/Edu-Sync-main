@@ -1,0 +1,94 @@
+    .theme-toggle-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--color-primary-dark);
+    color: var(--color-bg-light);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover {
+    opacity: 0.8;
+    }
+
+
+    body.dark-theme {
+    --color-bg-light: #1e1e2f;
+    --color-bg-alt: #2a2a3f;
+    --color-bg-fo:#2a2a3c;
+    --color-accent-light: #3a3f5a;
+    --color-accent: #4a4a6a;
+    --color-accent-dark: #555c7a;
+    --color-primary: #b6ccfe;
+    --color-primary-dark: #abc4ff;
+    --color-border: #555c7a;
+    --color-shadow: rgba(0,0,0,0.5);
+    --color-text-main: #ffffff;
+    --color-text-light: #cccccc;
+    --color-heading: #ffffff;
+    font-family: inherit;
+    }
+    body.dark-theme{
+        background-image: linear-gradient(var(--color-bg-light)) !important;
+    }
+    body.dark-theme .bg-fo{
+        background-color: var(--color-bg-fo) !important;
+    }
+    body.dark-theme .form-control{
+        background-color: var(--color-text-light);
+    }
+    body.dark-theme .button-primary:hover {
+    background-color: var(--color-bg-alt) !important;
+    color: var(--color-text-main) !important;
+    border-color: var(--color-primary-dark) !important;
+    }
+
+    body.dark-theme .button-outline-primary:hover  {
+    color: #ffffff !important;
+    background-color: var(--color-primary-dark) !important;
+    border-color: var(--color-primary-dark) !important;
+    }
+
+    body.dark-theme .feature-card {
+    background-color: var(--color-bg-alt);
+    border-color: var(--color-border);
+    color: var(--color-text-main);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    body.dark-theme .feature-card h3,
+    body.dark-theme .feature-card h5 {
+    color: var(--color-text-main);
+    }
+
+    body.dark-theme .Hero-section {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-main);
+    }
+
+    body.dark-theme .Hero-section .mark {
+    color: var(--color-primary);
+    background-color: transparent;
+    }
+
+    body.dark-theme .navbar,
+    body.dark-theme .navbar-nav .nav-link {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-main);
+    }
+
+    body.dark-theme .navbar-nav .nav-link:hover {
+    color: var(--color-primary-dark);
+    }
+
+    body.dark-theme .centered-photo {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark-theme h2, 
+    body.dark-theme h3, 
+    body.dark-theme h5 {
+    color: var(--color-text-main);
+    }
