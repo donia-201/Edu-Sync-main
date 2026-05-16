@@ -68,11 +68,6 @@ body {
             animation: shimmer 3s infinite;
         }
 
-        @keyframes shimmer {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-30%, -30%) scale(1.1); }
-        }
-
         .notification-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
@@ -217,16 +212,7 @@ body {
     animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.1);
-        opacity: 0.8;
-    }
-}
+
 
 .notification-title {
     font-size: 1.2rem;

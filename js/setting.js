@@ -1,452 +1,401 @@
-// ===== SETTINGS PAGE - Backend Integration =====
+// ===== SETTINGS PAGE - FIXED VERSION =====
 
 const API_BASE_URL = 'https://edu-sync-back-end-production.up.railway.app';
 
-// ===== Map Frontend to Backend Field Names =====
-const fieldMapping = {
-    // Frontend -> Backend
-    pomodoroDuration: 'pomodoro_duration',
-    breakDuration: 'short_break',
-    longBreakDuration: 'long_break',
-    fontSize: 'font_size',
-    soundEffects: 'sound_enabled',
-    desktopNotifications: 'notifications_enabled'
+// ===== Toast instead of alert =====
+function showToast(message, type = 'success') {
+  let toast = document.getElementById('settings-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'settings-toast';
+    toast.style.cssText = `
+      position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+      padding:12px 24px;border-radius:25px;font-size:14px;font-weight:600;
+      z-index:9999;opacity:0;transition:opacity 0.3s ease;
+      box-shadow:0 4px 15px rgba(0,0,0,0.2);max-width:90vw;text-align:center;color:#fff;
+    `;
+    document.body.appendChild(toast);
+  }
+  const colors = { success:'#4CAF50', error:'#f44336', warning:'#FF9800', info:'#2196F3' };
+  toast.style.background = colors[type] || colors.success;
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+}
+
+// ===== TRANSLATIONS (for language change) =====
+// FIX: changing language changes all visible text, not just direction
+const TRANSLATIONS = {
+  en: {
+    welcomeBack: "Welcome back",
+    settings: "Settings",
+    saveSettings: "Save Settings",
+    account: "Account",
+    displayName: "Display Name",
+    email: "Email",
+    studyField: "Study Field",
+    appearance: "Appearance",
+    theme: "Theme",
+    language: "Language",
+    fontSize: "Font Size",
+    animations: "Animations",
+    studyPreferences: "Study Preferences",
+    pomodoroDuration: "Focus Duration (minutes)",
+    breakDuration: "Short Break (minutes)",
+    longBreakDuration: "Long Break (minutes)",
+    studyGoal: "Daily Study Goal (hours)",
+    autoStart: "Auto-start Next Session",
+    notifications: "Notifications",
+    studyReminders: "Study Reminders",
+    breakNotifications: "Break Notifications",
+    examReminders: "Exam Reminders",
+    weeklyReport: "Weekly Report",
+    soundEffects: "Sound Effects",
+    desktopNotifications: "Desktop Notifications",
+    saveSuccess: "Settings saved successfully!",
+    saveError: "Error saving settings"
+  },
+  ar: {
+    welcomeBack: "مرحباً بعودتك",
+    settings: "الإعدادات",
+    saveSettings: "حفظ الإعدادات",
+    account: "الحساب",
+    displayName: "الاسم",
+    email: "البريد الإلكتروني",
+    studyField: "مجال الدراسة",
+    appearance: "المظهر",
+    theme: "الثيم",
+    language: "اللغة",
+    fontSize: "حجم الخط",
+    animations: "الحركات",
+    studyPreferences: "تفضيلات الدراسة",
+    pomodoroDuration: "مدة التركيز (دقائق)",
+    breakDuration: "استراحة قصيرة (دقائق)",
+    longBreakDuration: "استراحة طويلة (دقائق)",
+    studyGoal: "هدف الدراسة اليومي (ساعات)",
+    autoStart: "بدء الجلسة التالية تلقائياً",
+    notifications: "الإشعارات",
+    studyReminders: "تذكيرات الدراسة",
+    breakNotifications: "إشعارات الاستراحة",
+    examReminders: "تذكيرات الامتحانات",
+    weeklyReport: "التقرير الأسبوعي",
+    soundEffects: "المؤثرات الصوتية",
+    desktopNotifications: "إشعارات سطح المكتب",
+    saveSuccess: "تم حفظ الإعدادات بنجاح!",
+    saveError: "خطأ في حفظ الإعدادات"
+  },
+  fr: {
+    welcomeBack: "Bon retour",
+    settings: "Paramètres",
+    saveSettings: "Enregistrer",
+    account: "Compte",
+    displayName: "Nom d'affichage",
+    email: "Email",
+    studyField: "Domaine d'étude",
+    appearance: "Apparence",
+    theme: "Thème",
+    language: "Langue",
+    fontSize: "Taille de police",
+    animations: "Animations",
+    studyPreferences: "Préférences d'étude",
+    pomodoroDuration: "Durée de focus (minutes)",
+    breakDuration: "Pause courte (minutes)",
+    longBreakDuration: "Pause longue (minutes)",
+    studyGoal: "Objectif quotidien (heures)",
+    autoStart: "Démarrage automatique",
+    notifications: "Notifications",
+    studyReminders: "Rappels d'étude",
+    breakNotifications: "Notifications de pause",
+    examReminders: "Rappels d'examen",
+    weeklyReport: "Rapport hebdomadaire",
+    soundEffects: "Effets sonores",
+    desktopNotifications: "Notifications bureau",
+    saveSuccess: "Paramètres sauvegardés!",
+    saveError: "Erreur lors de la sauvegarde"
+  }
 };
 
-// ===== Save Settings to Backend and LocalStorage =====
+// FIX: apply full language change — text + direction
+function applyLanguageChange(lang) {
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+
+  // Direction
+  if (lang === 'ar') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', lang);
+  }
+
+  // Update labels by data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+
+  // Store language for all pages to use
+  const settings = JSON.parse(localStorage.getItem('eduSyncSettings') || '{}');
+  settings.language = lang;
+  settings.translations = t;
+  localStorage.setItem('eduSyncSettings', JSON.stringify(settings));
+  localStorage.setItem('eduSyncLanguage', lang);
+}
+
+// ===== Save Settings =====
 async function saveSettings() {
-    const settings = {
-        // Account
-        displayName: document.getElementById('displayName').value,
-        email: document.getElementById('email').value,
-        studyField: document.getElementById('studyField').value,
-        academicLevel: document.getElementById('academicLevel').value,
-        
-        // Appearance
-        theme: document.getElementById('theme').value,
-        language: document.getElementById('language').value,
-        fontSize: document.getElementById('fontSize').value,
-        animations: document.getElementById('animations').checked,
-        
-        // Study Preferences
-        pomodoroDuration: document.getElementById('pomodoroDuration').value,
-        breakDuration: document.getElementById('breakDuration').value,
-        longBreakDuration: document.getElementById('longBreakDuration').value,
-        studyGoal: document.getElementById('studyGoal').value,
-        autoStart: document.getElementById('autoStart').checked,
-        
-        // Notifications
-        studyReminders: document.getElementById('studyReminders').checked,
-        breakNotifications: document.getElementById('breakNotifications').checked,
-        examReminders: document.getElementById('examReminders').checked,
-        weeklyReport: document.getElementById('weeklyReport').checked,
-        soundEffects: document.getElementById('soundEffects').checked,
-        desktopNotifications: document.getElementById('desktopNotifications').checked,
-        
-        // Calendar Integration
-        googleCalendar: document.getElementById('googleCalendar').checked,
-        autoAddSessions: document.getElementById('autoAddSessions').checked,
-        syncExams: document.getElementById('syncExams').checked,
-        
-        // Privacy
-        analytics: document.getElementById('analytics').checked
-    };
+  const getValue  = id => document.getElementById(id)?.value;
+  const getChecked = id => document.getElementById(id)?.checked;
 
+  const displayName = getValue('displayName')?.trim();
+  const studyField  = getValue('studyField');
+  const language    = getValue('language');
+
+  const settings = {
+    displayName,
+    email:            getValue('email'),
+    studyField,
+    academicLevel:    getValue('academicLevel'),
+    theme:            getValue('theme'),
+    language,
+    fontSize:         getValue('fontSize'),
+    animations:       getChecked('animations'),
+    pomodoroDuration: getValue('pomodoroDuration'),
+    breakDuration:    getValue('breakDuration'),
+    longBreakDuration:getValue('longBreakDuration'),
+    studyGoal:        getValue('studyGoal'),
+    // FIX: autoStart saved and persists correctly
+    autoStart:        getChecked('autoStart'),
+    studyReminders:   getChecked('studyReminders'),
+    breakNotifications: getChecked('breakNotifications'),
+    examReminders:    getChecked('examReminders'),
+    weeklyReport:     getChecked('weeklyReport'),
+    soundEffects:     getChecked('soundEffects'),
+    desktopNotifications: getChecked('desktopNotifications'),
+    googleCalendar:   getChecked('googleCalendar'),
+    autoAddSessions:  getChecked('autoAddSessions'),
+    syncExams:        getChecked('syncExams'),
+    analytics:        getChecked('analytics')
+  };
+
+  // Save to localStorage first
+  localStorage.setItem('eduSyncSettings', JSON.stringify(settings));
+
+  // FIX: update user object in localStorage so home.js reacts to study_field change
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  let userChanged = false;
+  if (displayName && displayName !== user.name && displayName !== user.username) {
+    user.name = displayName;
+    user.username = displayName;
+    userChanged = true;
+  }
+  if (studyField && studyField !== user.study_field) {
+    user.study_field = studyField;
+    userChanged = true;
+  }
+  if (userChanged) localStorage.setItem('user', JSON.stringify(user));
+
+  // FIX: apply language change (text + direction)
+  if (language) applyLanguageChange(language);
+
+  // Apply other settings immediately
+  if (window.EduSyncSettings) {
+    window.EduSyncSettings.apply();
+  } else {
+    if (window.applyTheme)      window.applyTheme(settings.theme);
+    if (window.applyFontSize)   window.applyFontSize(settings.fontSize);
+    if (window.applyAnimations) window.applyAnimations(settings.animations);
+  }
+
+  // Sync to backend
+  const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
+  if (token) {
     try {
-        // Save to localStorage first (fallback)
-        localStorage.setItem('eduSyncSettings', JSON.stringify(settings));
-        
-        const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
-        
-        if (token) {
-            // Prepare backend data (map field names)
-            const backendSettingsData = {
-                theme: settings.theme,
-                language: settings.language,
-                font_size: settings.fontSize,
-                pomodoro_duration: parseInt(settings.pomodoroDuration),
-                short_break: parseInt(settings.breakDuration),
-                long_break: parseInt(settings.longBreakDuration),
-                notifications_enabled: settings.desktopNotifications,
-                sound_enabled: settings.soundEffects
-            };
+      // Update settings
+      await fetch(`${API_BASE_URL}/api/user/settings`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+          theme:               settings.theme,
+          language:            settings.language,
+          font_size:           settings.fontSize,
+          pomodoro_duration:   parseInt(settings.pomodoroDuration),
+          short_break:         parseInt(settings.breakDuration),
+          long_break:          parseInt(settings.longBreakDuration),
+          notifications_enabled: settings.desktopNotifications,
+          sound_enabled:       settings.soundEffects
+        })
+      });
 
-            // Update settings in backend
-            const settingsResponse = await fetch(`${API_BASE_URL}/api/user/settings`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(backendSettingsData)
-            });
-
-            const settingsData = await settingsResponse.json();
-
-            if (settingsResponse.ok && settingsData.success) {
-            } else {
-                console.warn(' Backend settings save failed:', settingsData.msg);
-            }
-
-            // Update profile (name) if changed
-            const profileData = {
-                name: settings.displayName
-            };
-
-            const profileResponse = await fetch(`${API_BASE_URL}/api/user/profile`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(profileData)
-            });
-
-            const profileResult = await profileResponse.json();
-            
-            if (profileResponse.ok && profileResult.success) {
-            } else {
-                console.warn('⚠️ Backend profile save failed:', profileResult.msg);
-            }
-        }
-        
-        // Apply settings immediately
-        if (window.applyTheme) applyTheme(settings.theme);
-        if (window.applyFontSize) applyFontSize(settings.fontSize);
-        if (window.applyLanguage) applyLanguage(settings.language);
-        if (window.applyAnimations) applyAnimations(settings.animations);
-        
-        // Show success message
-        showSuccessMessage();
-        
-        // Request notification permission if enabled
-        if (settings.desktopNotifications) {
-            if (window.requestNotificationPermission) {
-                requestNotificationPermission();
-            }
-        }
-        
-    } catch (error) {
-        console.error(' Error saving settings:', error);
-        alert(' Settings saved locally but could not sync with server');
+      // Update profile (name + study_field)
+      await fetch(`${API_BASE_URL}/api/user/profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+          name:        settings.displayName,
+          study_field: settings.studyField
+        })
+      });
+    } catch (e) {
+      console.warn('Backend sync failed, saved locally:', e);
     }
+  }
+
+  showSuccessMessage();
+  showToast(TRANSLATIONS[language]?.saveSuccess || 'Settings saved!', 'success');
+
+  if (settings.desktopNotifications && window.requestNotificationPermission) {
+    window.requestNotificationPermission();
+  }
 }
 
-// ===== Load Settings from Backend and LocalStorage =====
+// ===== Load Settings =====
 async function loadSettings() {
-    try {
-        const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
-        let settings = null;
-        let userProfile = null;
+  try {
+    const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
+    let settings = null;
 
-        // Try to load from backend first
-        if (token) {
-            try {
-                // Get full user profile
-                const profileResponse = await fetch(`${API_BASE_URL}/api/user/profile`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                const profileData = await profileResponse.json();
-
-                if (profileResponse.ok && profileData.success && profileData.user) {
-                    userProfile = profileData.user;
-                    
-                    // Map backend settings to frontend format
-                    settings = {
-                        // From backend settings object
-                        theme: userProfile.settings.theme || 'blue',
-                        language: userProfile.settings.language || 'en',
-                        fontSize: userProfile.settings.font_size || 'medium',
-                        pomodoroDuration: userProfile.settings.pomodoro_duration || 25,
-                        breakDuration: userProfile.settings.short_break || 5,
-                        longBreakDuration: userProfile.settings.long_break || 30,
-                        desktopNotifications: userProfile.settings.notifications_enabled !== false,
-                        soundEffects: userProfile.settings.sound_enabled !== false,
-                        
-                        // From profile
-                        displayName: userProfile.name || '',
-                        email: userProfile.email || '',
-                        
-                        // Keep localStorage values for these (not in backend yet)
-                        studyField: null,
-                        academicLevel: null,
-                        studyGoal: null,
-                        autoStart: false,
-                        animations: true,
-                        studyReminders: true,
-                        breakNotifications: true,
-                        examReminders: true,
-                        weeklyReport: true,
-                        googleCalendar: false,
-                        autoAddSessions: false,
-                        syncExams: false,
-                        analytics: true
-                    };
-                    
-                }
-            } catch (e) {
-                console.warn('⚠️ Could not load from backend, using localStorage');
-            }
+    if (token) {
+      try {
+        const res  = await fetch(`${API_BASE_URL}/api/user/profile`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (res.ok && data.success && data.user) {
+          const u = data.user;
+          settings = {
+            // FIX: use name OR username correctly
+            displayName:      u.name || u.username || '',
+            email:            u.email || '',
+            studyField:       u.study_field || '',
+            theme:            u.settings?.theme || 'blue',
+            language:         u.settings?.language || 'en',
+            fontSize:         u.settings?.font_size || 'medium',
+            pomodoroDuration: u.settings?.pomodoro_duration || 25,
+            breakDuration:    u.settings?.short_break || 5,
+            longBreakDuration:u.settings?.long_break || 30,
+            desktopNotifications: u.settings?.notifications_enabled !== false,
+            soundEffects:     u.settings?.sound_enabled !== false
+          };
+          // Update local user object too
+          const localUser = JSON.parse(localStorage.getItem('user') || '{}');
+          localStorage.setItem('user', JSON.stringify({ ...localUser, name: settings.displayName, username: settings.displayName, study_field: settings.studyField }));
         }
-
-        // Merge with localStorage (for fields not in backend)
-        const localSettings = localStorage.getItem('eduSyncSettings');
-        if (localSettings) {
-            const local = JSON.parse(localSettings);
-            
-            if (settings) {
-                // Merge: keep backend values but add local-only fields
-                settings = {
-                    ...local,  // Local values as base
-                    ...settings  // Override with backend values
-                };
-            } else {
-                settings = local;
-            }
-            
-        }
-
-        // Apply settings to form
-        if (settings) {
-            // Account
-            if (settings.displayName) document.getElementById('displayName').value = settings.displayName;
-            if (settings.email) document.getElementById('email').value = settings.email;
-            if (settings.studyField) document.getElementById('studyField').value = settings.studyField;
-            if (settings.academicLevel) document.getElementById('academicLevel').value = settings.academicLevel;
-            
-            // Appearance
-            if (settings.theme) document.getElementById('theme').value = settings.theme;
-            if (settings.language) document.getElementById('language').value = settings.language;
-            if (settings.fontSize) document.getElementById('fontSize').value = settings.fontSize;
-            document.getElementById('animations').checked = settings.animations !== false;
-            
-            // Study Preferences
-            if (settings.pomodoroDuration) document.getElementById('pomodoroDuration').value = settings.pomodoroDuration;
-            if (settings.breakDuration) document.getElementById('breakDuration').value = settings.breakDuration;
-            if (settings.longBreakDuration) document.getElementById('longBreakDuration').value = settings.longBreakDuration;
-            if (settings.studyGoal) document.getElementById('studyGoal').value = settings.studyGoal;
-            document.getElementById('autoStart').checked = settings.autoStart || false;
-            
-            // Notifications
-            document.getElementById('studyReminders').checked = settings.studyReminders !== false;
-            document.getElementById('breakNotifications').checked = settings.breakNotifications !== false;
-            document.getElementById('examReminders').checked = settings.examReminders !== false;
-            document.getElementById('weeklyReport').checked = settings.weeklyReport !== false;
-            document.getElementById('soundEffects').checked = settings.soundEffects !== false;
-            document.getElementById('desktopNotifications').checked = settings.desktopNotifications || false;
-            
-            // Calendar Integration
-            document.getElementById('googleCalendar').checked = settings.googleCalendar || false;
-            document.getElementById('autoAddSessions').checked = settings.autoAddSessions || false;
-            document.getElementById('syncExams').checked = settings.syncExams || false;
-            
-            // Privacy
-            document.getElementById('analytics').checked = settings.analytics !== false;
-            
-            // Save merged settings to localStorage
-            localStorage.setItem('eduSyncSettings', JSON.stringify(settings));
-            
-        }
-        
-    } catch (error) {
-        console.error(' Error loading settings:', error);
+      } catch (e) { console.warn('Could not load from backend'); }
     }
+
+    // Merge with localStorage
+    const local = JSON.parse(localStorage.getItem('eduSyncSettings') || 'null');
+    if (local) settings = { ...local, ...settings };
+    if (!settings) return;
+
+    // Apply to form
+    const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined && val !== null) el.value = val; };
+    const chk = (id, val) => { const el = document.getElementById(id); if (el) el.checked = !!val; };
+
+    set('displayName', settings.displayName);
+    set('email',       settings.email);
+    set('studyField',  settings.studyField);
+    set('academicLevel', settings.academicLevel);
+    set('theme',       settings.theme);
+    set('language',    settings.language);
+    set('fontSize',    settings.fontSize);
+    chk('animations',  settings.animations !== false);
+    set('pomodoroDuration',  settings.pomodoroDuration);
+    set('breakDuration',     settings.breakDuration);
+    set('longBreakDuration', settings.longBreakDuration);
+    set('studyGoal',   settings.studyGoal);
+    // FIX: autoStart loaded correctly from saved settings
+    chk('autoStart',   settings.autoStart);
+    chk('studyReminders',     settings.studyReminders !== false);
+    chk('breakNotifications', settings.breakNotifications !== false);
+    chk('examReminders',      settings.examReminders !== false);
+    chk('weeklyReport',       settings.weeklyReport !== false);
+    chk('soundEffects',       settings.soundEffects !== false);
+    chk('desktopNotifications', settings.desktopNotifications);
+    chk('googleCalendar',     settings.googleCalendar);
+    chk('autoAddSessions',    settings.autoAddSessions);
+    chk('syncExams',          settings.syncExams);
+    chk('analytics',          settings.analytics !== false);
+
+    localStorage.setItem('eduSyncSettings', JSON.stringify(settings));
+
+    // Apply language on load
+    if (settings.language) applyLanguageChange(settings.language);
+
+  } catch (e) { console.error('Error loading settings:', e); }
 }
 
-// ===== Reset All Settings =====
+// ===== Reset Settings =====
 async function resetSettings() {
-    if (!confirm('Are you sure you want to reset all settings to default? This cannot be undone.')) {
-        return;
-    }
-
+  if (!confirm('Reset all settings to default?')) return;
+  localStorage.removeItem('eduSyncSettings');
+  const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
+  if (token) {
     try {
-        // Remove from localStorage
-        localStorage.removeItem('eduSyncSettings');
-        
-        const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
-        
-        // Reset on backend (set to default values)
-        if (token) {
-            const defaultSettings = {
-                theme: 'blue',
-                language: 'en',
-                font_size: 'medium',
-                pomodoro_duration: 25,
-                short_break: 5,
-                long_break: 30,
-                notifications_enabled: true,
-                sound_enabled: true
-            };
-
-            await fetch(`${API_BASE_URL}/api/user/settings`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(defaultSettings)
-            });
-        }
-        
-        // Reload page to show defaults
-        window.location.reload();
-        
-    } catch (error) {
-        console.error(' Error resetting settings:', error);
-        localStorage.removeItem('eduSyncSettings');
-        window.location.reload();
-    }
+      await fetch(`${API_BASE_URL}/api/user/settings`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ theme:'blue', language:'en', font_size:'medium', pomodoro_duration:25, short_break:5, long_break:30, notifications_enabled:true, sound_enabled:true })
+      });
+    } catch (e) {}
+  }
+  window.location.reload();
 }
 
 // ===== Export Data =====
 async function exportData() {
-    try {
-        const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
-        
-        if (!token) {
-            return;
-        }
-
-        // For now, export localStorage data
-        const allData = {
-            settings: JSON.parse(localStorage.getItem('eduSyncSettings') || '{}'),
-            notifications: JSON.parse(localStorage.getItem('pomodoro_notifications') || '[]'),
-            pomodoroState: JSON.parse(localStorage.getItem('pomodoro_forest_state_v2') || '{}'),
-            exportDate: new Date().toISOString()
-        };
-
-        const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `edusync-data-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-        
-        alert(' Data exported successfully!');
-        
-    } catch (error) {
-        console.error(' Error exporting data:', error);
-        alert(' Error exporting data');
-    }
+  const allData = {
+    settings:      JSON.parse(localStorage.getItem('eduSyncSettings') || '{}'),
+    notifications: JSON.parse(localStorage.getItem('pomodoro_notifications') || '[]'),
+    pomodoroState: JSON.parse(localStorage.getItem('pomodoro_forest_state_v2') || '{}'),
+    exportDate:    new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `edusync-data-${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a); a.click();
+  URL.revokeObjectURL(url); document.body.removeChild(a);
+  showToast('Data exported!', 'success');
 }
 
 // ===== Delete Account =====
 async function deleteAccount() {
-    const confirmation = prompt(' WARNING: This will permanently delete your account and all data.\n\nType "DELETE" to confirm:');
-    
-    if (confirmation !== 'DELETE') {
-        alert(' Account deletion cancelled');
-        return;
-    }
-
-    try {
-        const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
-        
-        if (!token) {
-            alert(' Please login to delete your account');
-            return;
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/account/delete`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (response.ok) {
-            // Clear all local data
-            localStorage.clear();
-            sessionStorage.clear();
-            
-            alert(' Account deleted successfully. You will now be redirected to the home page.');
-            window.location.href = '../index.html';
-        } else {
-            const data = await response.json();
-            alert(' Failed to delete account: ' + (data.msg || 'Unknown error'));
-        }
-        
-    } catch (error) {
-        console.error(' Error deleting account:', error);
-        alert(' Error deleting account: ' + error.message);
-    }
+  const confirmation = prompt('Type "DELETE" to permanently delete your account:');
+  if (confirmation !== 'DELETE') { showToast('Cancelled', 'info'); return; }
+  try {
+    const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
+    if (!token) { showToast('Please login first', 'error'); return; }
+    const res = await fetch(`${API_BASE_URL}/api/account/delete`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+    if (res.ok) { localStorage.clear(); sessionStorage.clear(); window.location.href = '../index.html'; }
+    else { const d = await res.json(); showToast('Failed: ' + (d.msg || 'Unknown error'), 'error'); }
+  } catch (e) { showToast('Error: ' + e.message, 'error'); }
 }
 
-// ===== Show Success Message =====
+// ===== Success Message =====
 function showSuccessMessage() {
-    const message = document.getElementById('successMessage');
-    if (message) {
-        message.style.display = 'block';
-        setTimeout(() => {
-            message.style.display = 'none';
-        }, 3000);
-    }
+  const msg = document.getElementById('successMessage');
+  if (msg) { msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 3000); }
 }
 
-// ===== Apply Theme Changes (Preview) =====
-document.getElementById('theme')?.addEventListener('change', (e) => {
-    if (window.applyTheme) {
-        applyTheme(e.target.value);
-    }
-});
+// ===== Live Previews =====
+document.getElementById('theme')?.addEventListener('change',    e => window.EduSyncSettings?.applyTheme(e.target.value)    || window.applyTheme?.(e.target.value));
+document.getElementById('fontSize')?.addEventListener('change', e => window.EduSyncSettings?.applyFontSize(e.target.value) || window.applyFontSize?.(e.target.value));
+document.getElementById('language')?.addEventListener('change', e => applyLanguageChange(e.target.value));
+document.getElementById('animations')?.addEventListener('change', e => window.EduSyncSettings?.applyAnimations(e.target.checked) || window.applyAnimations?.(e.target.checked));
 
-document.getElementById('fontSize')?.addEventListener('change', (e) => {
-    if (window.applyFontSize) {
-        applyFontSize(e.target.value);
-    }
-});
-
-document.getElementById('language')?.addEventListener('change', (e) => {
-    if (window.applyLanguage) {
-        applyLanguage(e.target.value);
-    }
-});
-
-document.getElementById('animations')?.addEventListener('change', (e) => {
-    if (window.applyAnimations) {
-        applyAnimations(e.target.checked);
-    }
-});
-
-// ===== Event Listeners for Action Buttons =====
+// ===== Init =====
 document.addEventListener('DOMContentLoaded', () => {
-    // Load settings on page load
-    loadSettings();
-    
-    // Export data button
-    const exportBtn = document.querySelector('.action-btn:not(.danger)');
-    if (exportBtn && exportBtn.textContent.includes('Export')) {
-        exportBtn.onclick = (e) => {
-            e.preventDefault();
-            exportData();
-        };
-    }
-    
-    // Delete account button
-    const deleteBtn = document.querySelector('.action-btn.danger');
-    if (deleteBtn) {
-        deleteBtn.onclick = (e) => {
-            e.preventDefault();
-            deleteAccount();
-        };
-    }
+  loadSettings();
+
+  document.querySelector('.action-btn:not(.danger)')?.addEventListener('click', e => { e.preventDefault(); exportData(); });
+  document.querySelector('.action-btn.danger')?.addEventListener('click', e => { e.preventDefault(); deleteAccount(); });
 });
 
-// ===== Auto-save on change (optional) =====
+// ===== Auto-save =====
 function enableAutoSave() {
-    const inputs = document.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        input.addEventListener('change', () => {
-            saveSettings();
-        });
-    });
+  document.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('change', () => saveSettings());
+  });
 }
-
 enableAutoSave();
-
