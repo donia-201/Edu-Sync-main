@@ -54,3 +54,18 @@ function toggleFAQ(element) {
     const icon = element.querySelector('.faq-question span');
     icon.textContent = element.classList.contains('active') ? '▲' : '▼';
 }
+
+ // Direction
+  if (lang === 'ar') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', lang);
+  }
+
+  // Update labels by data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
