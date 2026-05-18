@@ -1,4 +1,4 @@
-// ===== POMODORO TIMER =====
+// ===== POMODORO TIMER - AUTO-RUN VERSION =====
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -9,15 +9,13 @@ function getSettings() {
         try {
             const settings = JSON.parse(saved);
             return {
-                pomodoroDuration:     parseInt(settings.pomodoroDuration) || 25,
-                breakDuration:        parseInt(settings.breakDuration) || 5,
-                longBreakDuration:    parseInt(settings.longBreakDuration) || 30,
-                soundEffects:         settings.soundEffects !== false,
+                pomodoroDuration: parseInt(settings.pomodoroDuration) || 25,
+                breakDuration: parseInt(settings.breakDuration) || 5,
+                longBreakDuration: parseInt(settings.longBreakDuration) || 30,
+                soundEffects: settings.soundEffects !== false,
                 desktopNotifications: settings.desktopNotifications === true,
-                // FIX 1: read autoStart from settings (default false = manual)
-                autoStartNext:        settings.autoStart === true,
-                // FIX 2: read study goal for goal notification
-                studyGoal:            parseInt(settings.studyGoal) || 0
+                autoStartNext: settings.autoStart === true,   // FIX: read from settings
+                studyGoal: parseInt(settings.studyGoal) || 0  // FIX: for goal notification
             };
         } catch (e) {
             console.error('Error loading settings:', e);
@@ -31,10 +29,9 @@ function getSettings() {
 }
 
 const SESSIONS_BEFORE_LONG_BREAK = 4;
-const GROW_STAGES  = 4;
-const focusGifUrl  = "../imgs/200w.webp";
-const breakGifUrl  = "../imgs/200w-1.webp";
-const API_BASE_URL = 'https://edu-sync-back-end-production.up.railway.app';
+const GROW_STAGES = 4;
+const focusGifUrl = "../imgs/200w.webp";
+const breakGifUrl = "../imgs/200w-1.webp";
 
 const startBtn        = document.getElementById("startBtn");
 const pauseBtn        = document.getElementById("pauseBtn");
@@ -53,34 +50,31 @@ let timer = null;
 let sessionsCompleted = 0;
 let sessionsToday = 0;
 
-// FIX 3: added focusStart / breakStart / goalReached messages
+const API_BASE_URL = 'https://edu-sync-back-end-production.up.railway.app';
+
 const motivationalMessages = {
     focus: [
-        { ar: "🎉 رائع! أكملت جلسة تركيز كاملة. أنت تقترب من هدفك!", en: "Amazing! You completed a full focus session!" },
-        { ar: "🎉 إنجاز عظيم! كل دقيقة من تركيزك تبني مستقبلك.", en: "Great achievement! Every minute builds your future." },
-        { ar: "🎉 مذهل! أنت تثبت أن الإرادة أقوى من أي شيء.", en: "Incredible! You're proving willpower conquers all." },
-        { ar: "🎉 ممتاز! استمر في هذا الزخم، النجاح قريب جداً.", en: "Excellent! Keep this momentum, success is close." },
-        { ar: "🎉 فخور بك! أنت تحول أحلامك إلى واقع خطوة بخطوة.", en: "Proud of you! You're turning dreams into reality." }
+        { ar: " رائع! أكملت جلسة تركيز كاملة. أنت تقترب من هدفك!", en: "Amazing! You completed a full focus session!" },
+        { ar: " إنجاز عظيم! كل دقيقة من تركيزك تبني مستقبلك.", en: "Great achievement! Every minute builds your future." },
+        { ar: " مذهل! أنت تثبت أن الإرادة أقوى من أي شيء.", en: "Incredible! You're proving willpower conquers all." },
+        { ar: " ممتاز! استمر في هذا الزخم، النجاح قريب جداً.", en: "Excellent! Keep this momentum, success is close." },
+        { ar: " فخور بك! أنت تحول أحلامك إلى واقع خطوة بخطوة.", en: "Proud of you! You're turning dreams into reality." }
     ],
     break: [
-        { ar: "☕ وقت الاستراحة! اشرب ماء، تمدد قليلاً، وعد بطاقة أكبر.", en: "Break time! Drink water, stretch, come back stronger." },
-        { ar: "☕ خذ نفساً عميقاً... أنت تستحق هذه الراحة.", en: "Take a deep breath... you deserve this rest." },
-        { ar: "☕ استرخ الآن! العقل يحتاج راحة ليبدع أكثر.", en: "Relax now! The mind needs rest to be creative." },
-        { ar: "☕ استراحة جميلة! حرك جسمك قليلاً واشحن طاقتك.", en: "Nice break! Move your body and recharge." }
+        { ar: " وقت الاستراحة! اشرب ماء، تمدد قليلاً، وعد بطاقة أكبر.", en: "Break time! Drink water, stretch, come back stronger." },
+        { ar: " خذ نفساً عميقاً... أنت تستحق هذه الراحة.", en: "Take a deep breath... you deserve this rest." },
+        { ar: " استرخ الآن! العقل يحتاج راحة ليبدع أكثر.", en: "Relax now! The mind needs rest to be creative." },
+        { ar: " استراحة جميلة! حرك جسمك قليلاً واشحن طاقتك.", en: "Nice break! Move your body and recharge." }
     ],
-    // FIX: start notifications
+    // FIX: added start + goal messages
     focusStart: [
-        { ar: "🎯 جلسة مذاكرة جديدة بدأت. تركيز كامل!", en: "🎯 Focus session started! Time to study." },
-        { ar: "🎯 ابدأ التركيز الآن! وقت المذاكرة بدأ.", en: "🎯 Let's go! Focus session started." }
+        { ar: "🎯 جلسة مذاكرة جديدة بدأت. تركيز كامل!", en: "🎯 Focus session started! Time to study." }
     ],
     breakStart: [
-        { ar: "☕ وقت الراحة بدأ! استرخ قليلاً.", en: "☕ Break started! Take it easy." },
-        { ar: "☕ استراحة مكتسبة! انت تستاهل.", en: "☕ Well-earned break! You deserve it." }
+        { ar: "☕ وقت الراحة بدأ! استرخ قليلاً.", en: "☕ Break started! Take it easy." }
     ],
-    // FIX: goal reached notification
     goalReached: [
-        { ar: "🏆 أحسنت! لقد وصلت لهدف الدراسة اليومي!", en: "🏆 Awesome! You've reached your daily study goal!" },
-        { ar: "🌟 مبروك! هدفك اليومي اكتمل. أنت بطل!", en: "🌟 Congrats! Daily goal complete. You're a champion!" }
+        { ar: "🏆 أحسنت! لقد وصلت لهدف الدراسة اليومي!", en: "🏆 You've reached your daily study goal!" }
     ]
 };
 
@@ -110,7 +104,7 @@ function showBrowserNotification(message, type) {
             body: message.ar + '\n' + message.en,
             icon: icon,
             badge: '../imgs/education.png',
-            tag: `pomodoro-${type}-${Date.now()}`,
+            tag: `pomodoro-${Date.now()}`,
             requireInteraction: false,
             silent: false,
             vibrate: [200, 100, 200]
@@ -125,23 +119,22 @@ async function saveNotificationToBackend(message, type) {
     try {
         const token = localStorage.getItem('session_token') || localStorage.getItem('authToken');
         if (!token) return;
-        const isStart = type.endsWith('Start');
         await fetch(`${API_BASE_URL}/api/notifications`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
-                title: isStart
-                    ? (type === 'focusStart' ? '🎯 Focus Session Started!' : '☕ Break Started!')
-                    : type === 'goalReached' ? '🏆 Study Goal Reached!'
-                    : type === 'focus' ? '🎉 Focus Session Complete!' : '☕ Break Complete!',
+                title: type === 'focusStart' ? '🎯 Focus Session Started!' :
+                       type === 'breakStart' ? '☕ Break Started!' :
+                       type === 'goalReached' ? '🏆 Study Goal Reached!' :
+                       type === 'focus' ? '🎉 Focus Session Complete!' : '☕ Break Complete!',
                 message: message.ar + ' | ' + message.en,
-                type: type === 'goalReached' ? 'event' : 'pomodoro',
+                type: 'pomodoro',
                 category: type.replace('Start', ''),
                 created_at: new Date().toISOString()
             })
         });
     } catch (e) {
-        console.error('Error saving notification:', e);
+        console.error('Error saving notification to backend:', e);
     }
 }
 
@@ -167,7 +160,7 @@ function playNotificationSound() {
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
-        const gainNode   = audioContext.createGain();
+        const gainNode = audioContext.createGain();
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
         oscillator.frequency.value = 800;
@@ -190,13 +183,12 @@ function showMotivationalMessage(type) {
     playNotificationSound();
 }
 
-// FIX: check if daily study goal was just reached
+// FIX: check if daily goal just reached
 function checkGoalReached() {
     const s = getSettings();
     if (!s.studyGoal || s.studyGoal <= 0) return;
     const goalMinutes    = s.studyGoal * 60;
     const studiedMinutes = sessionsToday * s.pomodoroDuration;
-    // Only fire exactly when crossing the goal (not every session after)
     if (studiedMinutes >= goalMinutes && (studiedMinutes - s.pomodoroDuration) < goalMinutes) {
         showMotivationalMessage('goalReached');
     }
@@ -214,9 +206,7 @@ function loadState() {
             s.sessionsToday = 0; s.sessionsCompleted = 0; s.lastDate = new Date().toDateString();
         }
         return s;
-    } catch (e) {
-        return { stage:0, sessionsToday:0, sessionsCompleted:0, lastDate:new Date().toDateString() };
-    }
+    } catch (e) { return { stage:0, sessionsToday:0, sessionsCompleted:0, lastDate:new Date().toDateString() }; }
 }
 
 function saveState(state) { localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
@@ -226,7 +216,6 @@ let stage = state.stage || 0;
 sessionsToday     = state.sessionsToday     || 0;
 sessionsCompleted = state.sessionsCompleted || 0;
 
-// ===== Get Current Duration =====
 function getCurrentDuration() {
     const settings = getSettings();
     if (mode === "focus")      return settings.pomodoroDuration * 60;
@@ -234,33 +223,26 @@ function getCurrentDuration() {
     return settings.longBreakDuration * 60;
 }
 
-// ===== Format Time =====
 function formatTime(s) {
     const m = Math.floor(s / 60).toString().padStart(2, '0');
     const sec = (s % 60).toString().padStart(2, '0');
     return `${m}:${sec}`;
 }
 
-// ===== Update UI =====
 function updateUI() {
     const settings = getSettings();
     timeDisplay.textContent = formatTime(remaining);
-
     let modeLabel = '';
     if (mode === "focus")           modeLabel = `Mode: Focus (${settings.pomodoroDuration}m)`;
     else if (mode === "shortBreak") modeLabel = `Mode: Short Break (${settings.breakDuration}m)`;
     else                            modeLabel = `Mode: Long Break (${settings.longBreakDuration}m)`;
     modeText.textContent = modeLabel;
-
     sessionsTodayEl.textContent = `Today's Pomodoros: ${sessionsToday} | Cycle: ${sessionsCompleted % SESSIONS_BEFORE_LONG_BREAK}/${SESSIONS_BEFORE_LONG_BREAK}`;
-
     focusGif.src = mode === "focus" ? focusGifUrl : breakGifUrl;
     focusGif.alt = mode === "focus" ? "Focus Mode" : "Break Mode";
-
     if (treeContainer) treeContainer.className = "tree stage-" + Math.min(stage, GROW_STAGES);
-    const names = ["Seed","Seedling","Young Tree","Mature Tree","Fully Grown Tree"];
+    const names = ["Seed", "Seedling", "Young Tree", "Mature Tree", "Fully Grown Tree"];
     if (stageText) stageText.textContent = `Level: ${names[Math.min(stage, GROW_STAGES)]}`;
-
     const trunk = document.querySelector('.trunk');
     if (trunk) {
         trunk.style.transition = "none";
@@ -270,11 +252,9 @@ function updateUI() {
             trunk.style.strokeDashoffset = "0";
         }, 10);
     }
-
     document.title = `${formatTime(remaining)} - EduSync ${mode === 'focus' ? '🎯' : '☕'}`;
 }
 
-// ===== Timer Tick =====
 function tick() {
     if (remaining > 0) {
         remaining--;
@@ -287,7 +267,6 @@ function tick() {
         clearInterval(timer);
         timer = null;
 
-        // Notify on session END
         const notificationType = mode === 'focus' ? 'focus' : 'break';
         showMotivationalMessage(notificationType);
 
@@ -296,11 +275,10 @@ function tick() {
             sessionsCompleted++;
             stage = Math.min(stage + 1, GROW_STAGES);
             saveState({ stage, sessionsToday, sessionsCompleted, lastDate: new Date().toDateString() });
-            // FIX: check daily goal after each focus session
+            // FIX: check goal after each focus session
             checkGoalReached();
         }
 
-        // Switch mode
         if (mode === "focus") {
             mode = sessionsCompleted % SESSIONS_BEFORE_LONG_BREAK === 0 ? "longBreak" : "shortBreak";
         } else {
@@ -310,11 +288,10 @@ function tick() {
         remaining = getCurrentDuration();
         updateUI();
 
-        // FIX 1: only auto-start if setting is enabled
+        // FIX: only auto-start if setting enabled, otherwise wait for manual start
         if (getSettings().autoStartNext) {
             setTimeout(() => { startTimer(); }, 2000);
         } else {
-            // Reset button to allow manual start
             startBtn.textContent = "▶ Start";
             startBtn.disabled = false;
             pauseBtn.disabled = true;
@@ -322,21 +299,17 @@ function tick() {
     }
 }
 
-// ===== Start Timer =====
-// FIX: isResume param — no start notification when resuming paused timer
+// FIX: isResume param — no start notification when resuming
 function startTimer(isResume = false) {
     if (timer) return;
-
-    // FIX: send start notification only on NEW session (not resume)
+    // FIX: send start notification only on new session
     if (!isResume) {
         showMotivationalMessage(mode === 'focus' ? 'focusStart' : 'breakStart');
     }
-
     timer = setInterval(tick, 1000);
     startBtn.textContent = mode === "focus" ? "🎯 Studying..." : "☕ Relaxing...";
     startBtn.disabled = true;
     pauseBtn.disabled = false;
-
     localStorage.setItem("pomodoroRunning", "true");
     localStorage.setItem("pomodoroMode", mode);
     localStorage.setItem("pomodoroRemaining", remaining);
@@ -344,7 +317,6 @@ function startTimer(isResume = false) {
     localStorage.setItem("pomodoroSessionsCompleted", sessionsCompleted);
 }
 
-// ===== Pause Timer =====
 function pauseTimer() {
     if (timer) {
         clearInterval(timer);
@@ -357,7 +329,6 @@ function pauseTimer() {
     }
 }
 
-// ===== Reset Timer =====
 function resetTimer() {
     pauseTimer();
     mode = "focus";
@@ -374,7 +345,6 @@ function resetTimer() {
     updateUI();
 }
 
-// ===== Initialize Timer =====
 function initializeTimer() {
     const wasRunning     = localStorage.getItem("pomodoroRunning");
     const wasPaused      = localStorage.getItem("pomodoroPaused");
@@ -391,8 +361,7 @@ function initializeTimer() {
         if (newRemaining > 0) {
             remaining = newRemaining;
             updateUI();
-            // FIX: resume = true → no duplicate start notification
-            startTimer(true);
+            startTimer(true); // FIX: resume = true, no start notification
             return;
         }
     } else if (wasPaused && savedRemaining) {
@@ -407,7 +376,6 @@ function initializeTimer() {
     requestNotificationPermission();
 }
 
-// ===== Event Listeners =====
 startBtn.addEventListener("click", () => { startTimer(false); });
 pauseBtn.addEventListener("click", () => { pauseTimer(); });
 resetBtn.addEventListener("click", () => {
@@ -453,19 +421,3 @@ window.addEventListener('storage', (e) => {
 initializeTimer();
 
 }); // end DOMContentLoaded
-
-
- // Direction
-  if (lang === 'ar') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', lang);
-  }
-
-  // Update labels by data-i18n attribute
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key]) el.textContent = t[key];
-  });
